@@ -1,134 +1,52 @@
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./CSS/style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form with Fields</title>
+    <title>Book A Course Form</title>
 </head>
+
 <body>
-    <h1>Form</h1>
-    <form action="mailto:australiarocks@hotmail.co.uk">
-        <label for="name">Name:&nbsp;</label> 
-        <input type="text" id="name" name="name" placeholder="Enter Your Full Name" pattern="^(?!.*(?:SELECT\s\*|DROP\sTABLE|--|;|1=1))[a-zA-Z'-]+\s){1,5}[a-zA-Z'-]+$" title="Please enter your full name" required maxlength="70"> 
-        <span id="name-error-message" class="error-message"></span>
-        <br>
+    <div class="grandParentContaniner">
+        <div class="parentContainer">
 
-        <label for="email">Email:&ensp;</label>
-        <input type="text" id="email" name="email" placeholder="Enter Your Email Address" pattern="^(?!.*(?:SELECT\s\*|DROP\sTABLE|--|;|1=1))[a-zA-Z0-9~!$%^&*_=+.-]+@(?!.*(?:SELECT\s\*|DROP\sTABLE|--|;|1=1))[a-zA-Z0-9.-]+\.(?!.*(?:SELECT\s\*|DROP\sTABLE|--|;|1=1))[a-zA-Z]{2,}" title="Please enter a valid email address" required maxlength="255">
-        <span id="email-error-message" class="error-message"></span>
-        <br>
+            <form id="sampleForm">
+                <label for="name">Name:&nbsp;</label>
+                <input type="text" id="name" name="name" placeholder="Enter Your Full Name"
+                    pattern="^(?!.*(?:SELECT\s\*|DROP\sTABLE|--|;|1=1))[a-zA-Z'-]+\s){1,5}[a-zA-Z'-]+$"
+                    title="Please enter your full name" required maxlength="70">
+                <span id="name-error-message" class="error-message"></span>
+                <br>
 
-        <label for="card">Card:&ensp;&nbsp;</label>
-        <input type="text" id="card" name="card" placeholder="Enter Your 16-digit Credit Card Number" pattern="\d{4}-\d{4}-\d{4}-\d{4}" title="Please enter a 16-digit credit card number" required maxlength="19">
-        <span id="card-error-message" class="error-message"></span>
-        <br>
+                <label for="email">Email:&ensp;</label>
+                <input type="text" id="email" name="email" placeholder="Enter Your Email Address"
+                    pattern="^(?!.*(?:SELECT\s\*|DROP\sTABLE|--|;|1=1))[a-zA-Z0-9~!$%^&*_=+.-]+@(?!.*(?:SELECT\s\*|DROP\sTABLE|--|;|1=1))[a-zA-Z0-9.-]+\.(?!.*(?:SELECT\s\*|DROP\sTABLE|--|;|1=1))[a-zA-Z]{2,}"
+                    title="Please enter a valid email address" required maxlength="255">
+                <span id="email-error-message" class="error-message"></span>
+                <br>
 
-        <input type="submit" value="Submit">
-    </form>
+                <label for="card">Card:&ensp;&nbsp;</label>
+                <input type="text" id="card" name="card" placeholder="Enter Your 16-digit Credit Card Number"
+                    pattern="\d{4}-\d{4}-\d{4}-\d{4}" title="Please enter a 16-digit credit card number" required maxlength="19">
+                <span id="card-error-message" class="error-message"></span>
+                <br>
 
-    <script>
-        // Function to validate the name field
-        function validateName() {
-            var nameInput = document.getElementById("name");
-            var namePattern = /^(?!.*(?:SELECT\s\*|DROP\sTABLE|--|;|1=1))[a-zA-Z'-.]+(?:\s[a-zA-Z'-.]+){1,5}$/;
-            var isValid = namePattern.test(nameInput.value);
-            nameInput.classList.toggle("invalid", !isValid);
-            nameInput.classList.toggle("valid", isValid);
+                <input type="submit" id="submitBtn" value="Submit" disabled>
+            </form>
 
-            var errorMessage = document.getElementById("name-error-message");
-            errorMessage.style.display = isValid ? "none" : "inline";
-        }
+            <div id="message" style="display: none;">
+                <p>Form submitted successfully!</p>
+            </div>
+        </div>
+    </div>
 
-        // Function to validate the email field
-        function validateEmail() {
-            var emailInput = document.getElementById("email");
-            var emailPattern = /^(?!.*(?:SELECT\s\*|DROP\sTABLE|--|;|1=1))[a-zA-Z0-9~!$%^&*_=+.-]+@(?!.*(?:SELECT\s\*|DROP\sTABLE|--|;|1=1))[a-zA-Z0-9.-]+\.(?!.*(?:SELECT\s\*|DROP\sTABLE|--|;|1=1))[a-zA-Z]{2,}$/;
-            var isValid = emailPattern.test(emailInput.value);
-            emailInput.classList.toggle("invalid", !isValid);
-            emailInput.classList.toggle("valid", isValid);
-
-            var errorMessage = document.getElementById("email-error-message");
-            errorMessage.style.display = isValid ? "none" : "inline";
-        }
-
-        // Function to calculate the LUHN algorithm
-        function luhnAlgorithm(cardNumber) {
-            var cleanNumber = cardNumber.replace(/-/g, '');
-            if (!/^\d{16}$/.test(cleanNumber)) {
-                return false;
-            }
-
-            var sum = 0;
-            var digit;
-            var even = false;
-
-            for (var i = cleanNumber.length - 1; i >= 0; i--) {
-                digit = parseInt(cleanNumber.charAt(i), 10);
-                if (even) {
-                    digit *= 2;
-                    if (digit > 9) {
-                        digit -= 9;
-                    }
-                }
-                sum += digit;
-                even = !even;
-            }
-
-            return sum % 10 === 0;
-        }
-
-        // Function to validate the card field
-        function validateCard() {
-            var cardInput = document.getElementById("card");
-            var cardValue = cardInput.value;
-            var cardNumber = cardValue.replace(/\D/g, ''); // Remove all non-numeric characters
-
-            // Automatically add hyphen after every 4 digits
-            var formattedCardNumber = '';
-            for (var i = 0; i < cardNumber.length; i++) {
-                if (i > 0 && i % 4 === 0) {
-                    formattedCardNumber += '-';
-                }
-                formattedCardNumber += cardNumber.charAt(i);
-            }
-
-            cardInput.value = formattedCardNumber;
-
-            var isValid = luhnAlgorithm(cardNumber);
-            cardInput.classList.toggle("invalid", !isValid);
-            cardInput.classList.toggle("valid", isValid);
-
-            var errorMessage = document.getElementById("card-error-message");
-            errorMessage.style.display = isValid ? "none" : "inline";
-        }
-
-        // Attach event listeners to update name, email, and card field backgrounds in real-time
-        document.getElementById("name").addEventListener("input", validateName);
-        document.getElementById("email").addEventListener("input", validateEmail);
-        document.getElementById("card").addEventListener("input", validateCard);
-        
-        // Attach event listener to the form's submit event
-        document.getElementById("sampleForm").addEventListener("submit", function(event) {
-            // Call the validation functions explicitly before checking the validity of each field
-            validateName();
-            validateEmail();
-            validateCard();
-
-            // Check if any field is invalid, and prevent form submission if any field is invalid
-            var formIsValid = true;
-            var inputFields = this.elements;
-            for (var i = 0; i < inputFields.length; i++) {
-                if (!inputFields[i].checkValidity()) {
-                    formIsValid = false;
-                    break;
-                }
-            }
-            if (!formIsValid) {
-                event.preventDefault();
-            }
-        });
-
-    </script>
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script src="JS/common.js"></script>
+    
+    
 </body>
+
 </html>
