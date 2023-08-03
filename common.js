@@ -2,7 +2,7 @@ emailjs.init("oqQJDG4y4dhzYeetS");
 
 function showPleaseWaitMessage() {
     var messageElement = document.getElementById("message");
-    messageElement.innerHTML = "Please wait..."; // Set the "Please wait..." message
+    messageElement.innerHTML = "Please wait..."; 
     messageElement.style.display = "block";
 }
 
@@ -15,21 +15,15 @@ async function sendEmail(formData) {
         email: formData.get("email"),
         card: formData.get("card")
     });
-    
-    console.log("Email sent successfully!");
 
     var messageElement = document.getElementById("message");
     messageElement.innerHTML = "Form submitted successfully!";
     messageElement.style.display = "block";
-
-    document.getElementById("sampleForm").reset();
 }
 
 
 document.getElementById("sampleForm").addEventListener("submit", function(event) {
     event.preventDefault(); 
-
-    console.log("Form submission initiated.");
 
     var formData = new FormData(event.target);
 
@@ -37,7 +31,7 @@ document.getElementById("sampleForm").addEventListener("submit", function(event)
 });
 
 
-// Function to validate the name field
+// Validate the name field
 function validateName() {
     var nameInput = document.getElementById("name");
     var namePattern = /^(?!.*(?:SELECT\s\*|DROP\sTABLE|--|;|1=1))[a-zA-Z'-.]+(?:\s[a-zA-Z'-.]+){1,5}$/;
@@ -51,7 +45,7 @@ function validateName() {
     validateForm();
 }
 
-// Function to validate the email field
+// Validate the email field
 function validateEmail() {
     var emailInput = document.getElementById("email");
     var emailPattern = /^(?!.*(?:SELECT\s\*|DROP\sTABLE|--|;|1=1))[a-zA-Z0-9~!$%^&*_=+.-]+@(?!.*(?:SELECT\s\*|DROP\sTABLE|--|;|1=1))[a-zA-Z0-9.-]+\.(?!.*(?:SELECT\s\*|DROP\sTABLE|--|;|1=1))[a-zA-Z]{2,}$/;
@@ -91,7 +85,7 @@ function luhnAlgorithm(cardNumber) {
     return sum % 10 === 0;
 }
 
-// Function to validate the card field
+// Validate the card field
 function validateCard() {
     var cardInput = document.getElementById("card");
     var cardValue = cardInput.value;
